@@ -1,0 +1,33 @@
+.main-home{
+  display: flex;
+  width: 100%;
+  padding: 20px;
+
+  .content-infos-user{
+    img {
+      width: 260px;
+      height: 260px;
+      border-radius: 6px;
+      margin-right: 40px;
+    }
+
+    div {
+      display: flex;
+      flex-direction: column;
+
+      span {
+        font-family: -apple-system,BlinkMacSystemFont,Segoe UI,Helvetica,Arial,sans-serif,Apple Color Emoji,Segoe UI Emoji;
+        font-size: 20px;
+        color: #666;
+      }
+
+      .username{
+        font-size: 26px;
+        font-weight: 600;
+        color: #24292e;
+
+        margin-top: 10px;
+      }
+    }
+  }
+}

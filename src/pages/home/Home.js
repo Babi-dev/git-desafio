@@ -1,40 +1,54 @@
 import React from "react";
+import { LocationOn, Link, Email } from "@material-ui/icons";
 
 import UsersList from "../../components/UsersList";
 
+import "./styles.scss";
+
 export default function Home({ repos, user }) {
-  console.log(repos);
-  console.log(user);
-
   return (
-    <main style={{ display: "flex", width: "100%", padding: "20px" }}>
-      <section
-        style={{
-          display: "flex",
-          flexDirection: "column",
-          justifyContent: "flex-start"
-        }}
-      >
-        <img
-          src={user && user.avatar_url}
-          style={{
-            width: "260px",
-            height: "260px",
-            borderRadius: "6px",
-            marginRight: "40px"
-          }}
-        />
+    <main className="main-home">
+      <section className="content-infos-user">
+        <img alt="avatar" src={user && user.avatar_url} />
 
-        <section style={{ display: "flex", flexDirection: "column" }}>
-          <span>{user && user.name}</span>
-          <span>{user && user.location}</span>
-          <span>{user && user.blog}</span>
-          <span>{user && user.email}</span>
-        </section>
+        <div>
+          <span className="username">{user && user.name}</span>
+
+          {user && user.location && (
+            <section style={{ display: "flex" }}>
+              <LocationOn
+                color="action"
+                style={{ width: "20px", height: "20px", marginRight: "6px" }}
+              />
+              <span>{user.location}</span>
+            </section>
+          )}
+
+          {user && user.blog && (
+            <section style={{ display: "flex" }}>
+              <Link
+                color="action"
+                style={{ width: "20px", height: "20px", marginRight: "6px" }}
+              />
+              <span>{user && user.blog}</span>
+            </section>
+          )}
+
+          {user && user.email && (
+            <section style={{ display: "flex" }}>
+              <Email
+                color="action"
+                style={{ width: "20px", height: "20px", marginRight: "6px" }}
+              />
+              <span>{user.email}</span>
+            </section>
+          )}
+        </div>
       </section>
-      <section style={{ width: "100%" }}>
-        <UsersList repos={repos} />
-      </section>
+
+      <>
+        <UsersList repos={repos} publicRepos={user && user.public_repos} />
+      </>
     </main>
   );
 }
