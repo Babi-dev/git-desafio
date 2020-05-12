@@ -1,15 +1,20 @@
-import React from 'react';
+import React from "react";
 
-import ItemUser from './ItemUsers';
+import ItemUser from "./ItemUsers";
 
-export default function UsersList({ users }){
+function UsersList({ repos }) {
+  return (
+    <section style={{ width: "100%" }}>
+      <span>Repositórios</span>
 
-    return (
-        <div>
-           {users && users.map((e, index) => {
-                    return <ItemUser key={index} user={e} />
-                })
-            }
-        </div>
-    );
+      <div style={{ display: "grid", gridTemplateColumns: "repeat(2, 1fr)" }}>
+        {repos &&
+          repos.map((e, index) => {
+            return <ItemUser key={index} repos={e} />;
+          })}
+      </div>
+    </section>
+  );
 }
+
+export default UsersList;

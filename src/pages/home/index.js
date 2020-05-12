@@ -1,36 +1,37 @@
-import React, { useState, useEffect } from 'react';
-import Home from './Home';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useState, useEffect } from "react";
 import { withRouter } from "react-router";
-import * as ActionsApplication from '../../store/application/actions/users.action';
+import { useSelector, useDispatch } from "react-redux";
 
-function PageHome(props){
+import Home from "./Home";
+import * as ActionsApplication from "../../store/application/actions/users.action";
 
+function PageHome({ match }) {
   const dispatch = useDispatch();
-  const usersRedux = useSelector( state => state.usersReducer.users );
+  const reposUser = useSelector(state => state.usersReducer.users.repos);
+  const userInfos = useSelector(state => state.usersReducer.users.user_infos);
 
-  const [users, setUsers] = useState([]);
+  const [repos, setRepos] = useState([]);
+  const [user, setUser] = useState(null);
 
-  useEffect(()=>{
-    const { match } = props;
+  useEffect(() => {
+    async function loadUsers(nome) {
+      let response = await ActionsApplication.loadUsers(nome);
 
-    async function loadUsers(nome){
-        let response = await ActionsApplication.loadUsers(nome);
-
-        dispatch(response);
+      dispatch(response);
     }
 
-    loadUsers(match.params.login?match.params.login:'camunda');
+    loadUsers(match.params.login ? match.params.login : "camunda");
+  }, [dispatch]);
 
-  },[dispatch]);
+  useEffect(() => {
+    setRepos(reposUser);
+  }, [reposUser]);
 
-  useEffect(()=>{
-            setUsers(usersRedux);
-  },[usersRedux]);
+  useEffect(() => {
+    setUser(userInfos);
+  }, [userInfos]);
 
-  return (
-      <Home users={users} />
-  )
+  return <Home repos={repos} user={user} />;
 }
 
 export default withRouter(PageHome);
